@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { expect } from 'chai';
-import { Greeter } from '../../../src/core/model/greeter';
+import { Greeter } from '../../../../src/core/model/greeter';
 
 
 
