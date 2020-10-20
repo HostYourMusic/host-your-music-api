@@ -1,0 +1,37 @@
+{
+  "name": "host-your-music-api",
+  "version": "1.0.0",
+  "description": "Music stream API",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run test:unit",
+    "test:unit": "npx mocha --recursive -r ts-node/register ./test/**/*.unit.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HostYourMusic/host-your-music-api.git"
+  },
+  "keywords": [
+    "music-stream",
+    "api",
+    "rest"
+  ],
+  "author": "Rodrigo de Souza",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HostYourMusic/host-your-music-api/issues"
+  },
+  "homepage": "https://github.com/HostYourMusic/host-your-music-api#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.14.0",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.0",
+    "ts-loader": "^8.0.6",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  }
+}
