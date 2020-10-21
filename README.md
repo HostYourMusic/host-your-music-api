@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to host-your-music-api 👋</h1>
+<h1 align="center">Welcome to HostYourMusic API 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/HostYourMusic/host-your-music-api#readme" target="_blank">
@@ -32,7 +32,7 @@ npm run test
 
 👤 **Rodrigo de Souza**
 
-* Github: [@HostYourMusic](https://github.com/HostYourMusic)
+* Github: [@rsouza01](https://github.com/rsouza01)
 
 ## 🤝 Contributing
 
@@ -44,7 +44,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2020 [Rodrigo de Souza](https://github.com/HostYourMusic).<br />
+Copyright © 2020 [Rodrigo de Souza](https://github.com/rsouza01).<br />
 This project is [MIT](https://github.com/HostYourMusic/host-your-music-api/blob/master/LICENSE) licensed.
 
 ***
