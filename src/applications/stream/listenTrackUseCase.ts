@@ -1,6 +1,7 @@
-import UseCase from "../infrastructure/useCase";
+import { ListenTrackUseCasePort } from "../../ports/stream";
+import { UseCase } from "../infrastructure";
 
-export default class ListenTrack extends UseCase {
+export default class ListenTrackUseCase extends UseCase  implements ListenTrackUseCasePort{
   async execute(): Promise<any> {
       return {};
   }
