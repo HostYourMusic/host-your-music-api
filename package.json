@@ -23,7 +23,9 @@
     "url": "https://github.com/HostYourMusic/host-your-music-api/issues"
   },
   "homepage": "https://github.com/HostYourMusic/host-your-music-api#readme",
-  "dependencies": {},
+  "dependencies": {
+    "http-status-codes": "^2.1.4"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.0.3",

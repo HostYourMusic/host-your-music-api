@@ -13,6 +13,10 @@ import {
   ListUsersInSubscriptionUseCasePort
 } from "./profile";
 
+/** Stream */
+  import {
+  ListenTrackUseCasePort
+} from "./stream";
 
 export {
   /** Catalog */
@@ -24,5 +28,8 @@ export {
   AssignUserToSubscriptionUseCasePort,
   CreateAccountUseCasePort,
   CreateSubscriptionUseCasePort,
-  ListUsersInSubscriptionUseCasePort
+  ListUsersInSubscriptionUseCasePort,
+
+  /** Stream */
+  ListenTrackUseCasePort
 };
