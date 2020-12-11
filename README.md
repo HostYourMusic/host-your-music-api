@@ -28,6 +28,10 @@ npm install
 npm run test
 ```
 
+## References and utilities
+
+* Open API visual editor: https://mermade.github.io/openapi-gui/#
+
 ## Author
 
 👤 **Rodrigo de Souza**
