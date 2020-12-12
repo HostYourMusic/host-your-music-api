@@ -1,15 +1,24 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 const CopyPlugin = require('copy-webpack-plugin');
+const slsw = require("serverless-webpack");
 
 
 module.exports = {
+  entry: slsw.lib.entries,
+  mode: slsw.lib.webpack.isLocal ? "development" : "production",
   devtool: "source-map",
   resolve: {
     extensions: [".js", ".jsx", ".json", ".ts", ".tsx", "yaml", "yml"],
     modules: ["."],
   },
-  plugins: [],
+  plugins: [
+    new CopyPlugin({
+      patterns: [{
+        from: path.resolve(__dirname, "api.yml")
+      }]
+    })
+  ],
   output: {
     libraryTarget: "commonjs",
     path: path.join(__dirname, ".webpack"),

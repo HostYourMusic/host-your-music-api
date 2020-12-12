@@ -6,7 +6,10 @@
   "scripts": {
     "build": "tsc",
     "test": "npm run test:unit",
-    "test:unit": "npx mocha --recursive -r ts-node/register ./test/**/*.unit.ts"
+    "test:unit": "npx mocha --recursive -r ts-node/register ./test/**/*.unit.ts",
+    "sls:package": "sls package",
+    "sls:deploy": "sls deploy",
+    "sls:undeploy": "sls remove"
   },
   "repository": {
     "type": "git",
@@ -30,10 +33,21 @@
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.0.3",
     "@types/node": "^14.14.0",
+    "@types/aws-lambda": "^8.10.53",
     "chai": "^4.2.0",
     "mocha": "^8.2.0",
     "ts-loader": "^8.0.6",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "serverless": "^2.15.0",
+    "aws-sdk": "^2.691.0",
+    "aws-sdk-mock": "^5.1.0",
+    "serverless-webpack": "^5.3.2",
+    "serverless-offline": "^6.4.0",
+    "serverless-pseudo-parameters": "2.5.0",
+    "copy-webpack-plugin": "^6.0.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2"
   }
 }
