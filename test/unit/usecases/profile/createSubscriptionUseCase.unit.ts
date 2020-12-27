@@ -5,9 +5,24 @@ import { CreateSubscriptionUseCase } from '../../../../src/usecases/profile';
 
 
 
-describe('CreateSubscriptionUseCase', function () {
-  it('Constructor', function () {
-    const createSubscriptionUseCase = new CreateSubscriptionUseCase();
-    expect(createSubscriptionUseCase).to.be.instanceof(CreateSubscriptionUseCase);
-  });
+describe('CreateSubscriptionUseCase', () =>  {
+	describe('Constructor', () => {
+
+		it('Happy Path', () => {
+			const createSubscriptionUseCase = new CreateSubscriptionUseCase();
+			expect(createSubscriptionUseCase).to.be.instanceof(CreateSubscriptionUseCase);
+		});
+	});
+
+	describe('Execute', () => {
+
+		it('Happy Path', async () => {
+			const createSubscriptionUseCase = new CreateSubscriptionUseCase();
+
+			const ucResult = await createSubscriptionUseCase.execute();
+			expect(ucResult).not.to.be.null;
+		});
+	});
+
+
 });
