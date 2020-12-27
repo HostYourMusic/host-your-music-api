@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/HostYourMusic/host-your-music-api#readme",
   "dependencies": {
-    "http-status-codes": "^2.1.4"
+    "http-status-codes": "^2.1.4",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.53",
@@ -35,6 +36,7 @@
     "@types/mocha": "^8.0.3",
     "@types/node": "^14.14.0",
     "@types/sinon": "^9.0.10",
+    "@types/uuid": "^8.3.0",
     "aws-sdk": "^2.691.0",
     "aws-sdk-mock": "^5.1.0",
     "chai": "^4.2.0",

@@ -51,10 +51,9 @@ describe('CreateSubscriptionUseCase', () =>  {
 			const createSubscriptionUseCase =
 				new CreateSubscriptionUseCase(userRepository, subscriptionRepository);
 
-
-
-			const ucResult = await createSubscriptionUseCase.execute();
-			expect(ucResult).not.to.be.null;
+			const newSubscription = await createSubscriptionUseCase.execute();
+			expect(newSubscription).not.to.be.null;
+			expect(newSubscription.id).not.to.be.null;
 		});
 	});
 
