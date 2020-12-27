@@ -1,3 +1,3 @@
 export default abstract class UseCase {
-    abstract execute(): Promise<any>;
+    abstract execute(input: any): Promise<any>;
 }

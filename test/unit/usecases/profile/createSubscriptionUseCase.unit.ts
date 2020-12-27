@@ -1,12 +1,13 @@
+
 import assert from 'assert';
 import sinon from 'sinon';
-
 import { expect } from 'chai';
 
-import { Subscription, User } from '../../../../src/core/domain';
+import { isValidUUIDV4 } from 'is-valid-uuid-v4';
 
+import { Subscription, User } from '../../../../src/core/domain';
 import { UserRepository, SubscriptionRepository } from '../../../../src/usecases/ports/repository';
-import { CreateSubscriptionUseCase } from '../../../../src/usecases/profile';
+import { CreateSubscriptionUseCaseInput, CreateSubscriptionUseCase } from '../../../../src/usecases/profile';
 
 
 export class MockUserRepository implements UserRepository {
@@ -50,10 +51,14 @@ describe('CreateSubscriptionUseCase', () =>  {
 
 			const createSubscriptionUseCase =
 				new CreateSubscriptionUseCase(userRepository, subscriptionRepository);
+			const input: CreateSubscriptionUseCaseInput = {
+				mainUser: user
+			};
 
-			const newSubscription = await createSubscriptionUseCase.execute();
+			const newSubscription = await createSubscriptionUseCase.execute(input);
 			expect(newSubscription).not.to.be.null;
 			expect(newSubscription.id).not.to.be.null;
+			expect(isValidUUIDV4(newSubscription.id)).to.be.true;
 		});
 	});
 

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { Subscription  } from "../../core/domain";
+import { User, Subscription  } from "../../core/domain";
 import { UseCase } from "../infrastructure";
 
 import {
@@ -8,18 +8,27 @@ import {
 	SubscriptionRepository
 } from "../ports/repository"
 
-export default class CreateSubscriptionUseCase extends UseCase {
+interface CreateSubscriptionUseCaseInput {
+	mainUser: User;
+}
+
+class CreateSubscriptionUseCase extends UseCase {
 	constructor(private userRepository: UserRepository,
 		private subscriptionRepository: SubscriptionRepository
 	) {
 		super();
 	};
 
-    async execute(): Promise<Subscription> {
+    async execute(input: CreateSubscriptionUseCaseInput): Promise<Subscription> {
 		const subscription: Subscription = {
 			id: uuidv4()
 		};
 
 		return subscription;
     }
+}
+
+export {
+	CreateSubscriptionUseCaseInput,
+	CreateSubscriptionUseCase
 }

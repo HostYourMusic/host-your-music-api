@@ -1,9 +1,15 @@
 import AssignUserToSubscriptionUseCase from "./assignUserToSubscriptionUseCase";
-import CreateSubscriptionUseCase from "./createSubscriptionUseCase";
+import { CreateSubscriptionUseCaseInput, CreateSubscriptionUseCase } from "./createSubscriptionUseCase";
+import { CreateNewUserUseCaseInput, CreateNewUserUseCase } from "./createNewUserUseCase";
 import ListUsersInSubscriptionUseCase from "./listUsersInSubscriptionUseCase";
 
 export {
+};
+
+export {
   AssignUserToSubscriptionUseCase,
-  CreateSubscriptionUseCase,
-  ListUsersInSubscriptionUseCase
+  CreateSubscriptionUseCaseInput, CreateSubscriptionUseCase,
+  ListUsersInSubscriptionUseCase,
+
+	CreateNewUserUseCaseInput, CreateNewUserUseCase
 };
