@@ -1,7 +1,6 @@
-import { ListUsersInSubscriptionUseCasePort } from "../../ports/profile";
 import { UseCase } from "../infrastructure";
 
-export default class ListUsersInSubscriptionUseCase  extends UseCase implements ListUsersInSubscriptionUseCasePort{
+export default class ListUsersInSubscriptionUseCase  extends UseCase {
     async execute(): Promise<any> {
         return {};
     }
