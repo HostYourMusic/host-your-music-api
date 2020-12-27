@@ -30,7 +30,9 @@ npm run test
 
 ## References and utilities
 
-* Open API visual editor: https://mermade.github.io/openapi-gui/#
+* [Open API visual editor](https://mermade.github.io/openapi-gui/#)
+* [Node/TS Hexagonal/Clean architecture reference project](https://github.com/otaviolemos/thewisedev-mailing)
+
 
 ## Author
 
