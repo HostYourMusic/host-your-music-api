@@ -9,7 +9,8 @@ import {
 } from "../ports/repository"
 
 interface CreateNewUserUseCaseInput {
-	name: string
+	name: string,
+	email: string
   }
 
 class CreateNewUserUseCase extends UseCase {
@@ -20,10 +21,18 @@ class CreateNewUserUseCase extends UseCase {
 	};
 
     async execute(input: CreateNewUserUseCaseInput): Promise<User> {
+
+		if(await this.userRepository.findByEmail(input.email)) {
+			throw new UserAlreadyExistException();
+		}
+
+
 		const user: User = {
 			id: uuidv4(),
 			name: input.name
 		};
+
+
 
 		return user;
     }

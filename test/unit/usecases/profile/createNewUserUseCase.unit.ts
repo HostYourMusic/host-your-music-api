@@ -7,7 +7,7 @@ import { isValidUUIDV4 } from 'is-valid-uuid-v4';
 
 import { Subscription, User } from '../../../../src/core/domain';
 import { UserRepository, SubscriptionRepository } from '../../../../src/usecases/ports/repository';
-import { CreateSubscriptionUseCaseInput, CreateSubscriptionUseCase } from '../../../../src/usecases/profile';
+import { CreateNewUserUseCaseInput, CreateNewUserUseCase } from '../../../../src/usecases/profile';
 
 
 export class MockUserRepository implements UserRepository {
@@ -17,6 +17,7 @@ export class MockUserRepository implements UserRepository {
 	exists (key: string): Promise<boolean>  { throw new Error("Method not implemented."); }
 	findByEmail(email: string): Promise<User>  { throw new Error("Method not implemented."); }
 }
+
 export class MockSubscriptionRepository implements SubscriptionRepository {
 	findAll (): Promise<Subscription[]> { throw new Error("Method not implemented."); }
 	findByKey (key: string): Promise<Subscription>  { throw new Error("Method not implemented."); }
@@ -25,15 +26,15 @@ export class MockSubscriptionRepository implements SubscriptionRepository {
 }
 
 
-describe('CreateSubscriptionUseCase', () =>  {
+describe('CreateNewUserUseCase', () =>  {
 	describe('Constructor', () => {
 
 		it('Happy Path', () => {
 			const userRepository = new MockUserRepository();
 			const subscriptionRepository = new MockSubscriptionRepository();
 
-			const createSubscriptionUseCase = new CreateSubscriptionUseCase(userRepository, subscriptionRepository);
-			expect(createSubscriptionUseCase).to.be.instanceof(CreateSubscriptionUseCase);
+			const createNewUserUseCase = new CreateNewUserUseCase(userRepository, subscriptionRepository);
+			expect(createNewUserUseCase).to.be.instanceof(CreateNewUserUseCase);
 		});
 	});
 
@@ -50,16 +51,16 @@ describe('CreateSubscriptionUseCase', () =>  {
 
 			const subscriptionRepository = new MockSubscriptionRepository();
 
-			const createSubscriptionUseCase =
-				new CreateSubscriptionUseCase(userRepository, subscriptionRepository);
-			const input: CreateSubscriptionUseCaseInput = {
-				mainUser: user
+			const createNewUserUseCase =
+				new CreateNewUserUseCase(userRepository, subscriptionRepository);
+			const input: CreateNewUserUseCaseInput = {
+				name: 'User Name'
 			};
 
-			const newSubscription = await createSubscriptionUseCase.execute(input);
-			expect(newSubscription).not.to.be.null;
-			expect(newSubscription.id).not.to.be.null;
-			expect(isValidUUIDV4(newSubscription.id)).to.be.true;
+			const newUser = await createNewUserUseCase.execute(input);
+			expect(newUser).not.to.be.null;
+			expect(newUser.id).not.to.be.null;
+			expect(isValidUUIDV4(newUser.id)).to.be.true;
 		});
 	});
 
