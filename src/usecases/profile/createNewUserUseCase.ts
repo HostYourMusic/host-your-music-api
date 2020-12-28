@@ -35,8 +35,6 @@ class CreateNewUserUseCase extends UseCase {
 			subscriptionId: ''
     };
 
-
-		/**TODO: FIX IT */
     await this.userRepository
       .add(user)
       .then(() => {
@@ -45,7 +43,7 @@ class CreateNewUserUseCase extends UseCase {
 
           const subscription: Subscription = {
             id: generateId(),
-            users: [user],
+            userIds: [user.id],
           };
 
           this.subscriptionRepository.add(subscription);

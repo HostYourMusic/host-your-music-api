@@ -11,7 +11,7 @@ import UserAlreadyExistsException from '../../../../src/usecases/exceptions/user
 
 import { Subscription, User } from '../../../../src/core/domain';
 import { CreateNewUserUseCaseInput, CreateNewUserUseCase } from '../../../../src/usecases/profile';
-import { MockLogger, MockUserRepository, MockSubscriptionRepository } from './mockRepository'
+import { MockLogger, MockUserRepository, MockSubscriptionRepository } from './mockedRepositories'
 
 const mockId = 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE';
 
@@ -22,7 +22,6 @@ describe('CreateNewUserUseCase', () =>  {
 	const subscriptionRepository = new MockSubscriptionRepository();
 
 	beforeEach(() => {
-		// sandbox.stub(idGenerator, 'generateId').returns(mockId);
 		sandbox.stub(generateId, 'default').returns(mockId);
 	});
 
@@ -35,7 +34,7 @@ describe('CreateNewUserUseCase', () =>  {
 		it('Happy Path', () => {
 			const userRepository = new MockUserRepository();
 			const subscriptionRepository = new MockSubscriptionRepository();
-
+			
 			const createNewUserUseCase = new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
 			chai.expect(createNewUserUseCase).to.be.instanceof(CreateNewUserUseCase);
 		});
@@ -82,7 +81,7 @@ describe('CreateNewUserUseCase', () =>  {
 
 			const existingSubscription: Subscription = {
 				id: mockId,
-				users: []
+				userIds: []
 			};
 
 			sandbox.stub(MockUserRepository.prototype, "findByEmail").resolves(undefined);
@@ -114,11 +113,6 @@ describe('CreateNewUserUseCase', () =>  {
 				subscriptionId: mockId
 			};
 
-			const existingSubscription: Subscription = {
-				id: mockId,
-				users: []
-			};
-
 			sandbox.stub(MockUserRepository.prototype, "findByEmail").resolves(existingUser);
 
 			const createNewUserUseCase =
@@ -131,7 +125,6 @@ describe('CreateNewUserUseCase', () =>  {
 
 			await chai.expect(createNewUserUseCase.execute(input))
 				.to.be.rejectedWith(UserAlreadyExistsException);
-
 		});
 	});
 });
