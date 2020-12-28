@@ -14,9 +14,18 @@ import UserAlreadyExistsException from '../../../../src/usecases/exceptions/user
 import { Subscription, User } from '../../../../src/core/domain';
 import { UserRepository, SubscriptionRepository } from '../../../../src/usecases/ports/repository';
 import { CreateNewUserUseCaseInput, CreateNewUserUseCase } from '../../../../src/usecases/profile';
+import { Logger } from '../../../../src/usecases/ports/infrastructure';
+
+class MockLogger implements Logger {
+	debug(message: any, data?: any): void {}
+	info(message: any, data?: any): void {}
+	warning(error: Error): void {}
+	error(error: Error): void {}
+	fatal(error: Error): void {}
+}
 
 
-export class MockUserRepository implements UserRepository {
+class MockUserRepository implements UserRepository {
 	findAll (): Promise<User[]> { throw new Error("Method not implemented."); }
 	findByKey (key: string): Promise<User | undefined>  { throw new Error("Method not implemented."); }
 	add (entity: User): Promise<void>  { throw new Error("Method not implemented."); }
@@ -24,7 +33,7 @@ export class MockUserRepository implements UserRepository {
 	findByEmail(email: string): Promise<User | undefined>  { throw new Error("Method not implemented."); }
 }
 
-export class MockSubscriptionRepository implements SubscriptionRepository {
+class MockSubscriptionRepository implements SubscriptionRepository {
 	findAll (): Promise<Subscription[]> { throw new Error("Method not implemented."); }
 	findByKey (key: string): Promise<Subscription | undefined>  { throw new Error("Method not implemented."); }
 	add (entity: Subscription): Promise<void>  { throw new Error("Method not implemented."); }
@@ -53,7 +62,7 @@ describe('CreateNewUserUseCase', () =>  {
 			const userRepository = new MockUserRepository();
 			const subscriptionRepository = new MockSubscriptionRepository();
 
-			const createNewUserUseCase = new CreateNewUserUseCase(userRepository, subscriptionRepository);
+			const createNewUserUseCase = new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
 			chai.expect(createNewUserUseCase).to.be.instanceof(CreateNewUserUseCase);
 		});
 	});
@@ -78,7 +87,7 @@ describe('CreateNewUserUseCase', () =>  {
 			sandbox.stub(MockSubscriptionRepository.prototype, "add").resolves();
 
 			const createNewUserUseCase =
-				new CreateNewUserUseCase(userRepository, subscriptionRepository);
+				new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
 			const input: CreateNewUserUseCaseInput = {
 				name: 'User Name',
 				email: 'user@mail.com'
@@ -114,7 +123,7 @@ describe('CreateNewUserUseCase', () =>  {
 			sandbox.stub(MockSubscriptionRepository.prototype, "findByKey").resolves(existingSubscription);
 
 			const createNewUserUseCase =
-				new CreateNewUserUseCase(userRepository, subscriptionRepository);
+				new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
 			const input: CreateNewUserUseCaseInput = {
 				name: 'User Name',
 				email: 'user@mail.com',
@@ -148,7 +157,7 @@ describe('CreateNewUserUseCase', () =>  {
 			sandbox.stub(MockUserRepository.prototype, "findByEmail").resolves(existingUser);
 
 			const createNewUserUseCase =
-				new CreateNewUserUseCase(userRepository, subscriptionRepository);
+				new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
 
 				const input: CreateNewUserUseCaseInput = {
 				name: 'User Name',

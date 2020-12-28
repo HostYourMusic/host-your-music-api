@@ -5,6 +5,7 @@ import { UseCase } from "../infrastructure";
 import UserAlreadyExistsException from '../exceptions/userAlreadyExistsException';
 
 import { UserRepository, SubscriptionRepository } from "../ports/repository"
+import { Logger } from '../ports/infrastructure';
 
 interface CreateNewUserUseCaseInput {
 	name: string,
@@ -15,7 +16,8 @@ interface CreateNewUserUseCaseInput {
 class CreateNewUserUseCase extends UseCase {
 	constructor(
 		private userRepository: UserRepository,
-		private subscriptionRepository: SubscriptionRepository
+		private subscriptionRepository: SubscriptionRepository,
+		private logger: Logger
 	) {
 		super();
 	};
@@ -56,11 +58,13 @@ class CreateNewUserUseCase extends UseCase {
 				}
 
 			}).then((subscription) => {
-
 				/**To avoid circular reference */
 				if(subscription) subscription.users = [];
 				user.subscription = subscription;
+			}).catch(error => {
+
 			});
+
 		return user;
 	}
 }

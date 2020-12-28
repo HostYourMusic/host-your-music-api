@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { User, Subscription  } from "../../core/domain";
 import { UseCase } from "../infrastructure";
+import { Logger } from '../ports/infrastructure';
 
 import {
 	UserRepository,
@@ -14,7 +15,8 @@ interface CreateSubscriptionUseCaseInput {
 
 class CreateSubscriptionUseCase extends UseCase {
 	constructor(private userRepository: UserRepository,
-		private subscriptionRepository: SubscriptionRepository
+		private subscriptionRepository: SubscriptionRepository,
+		private logger: Logger
 	) {
 		super();
 	};
