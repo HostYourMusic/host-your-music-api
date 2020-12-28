@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "npm run test:unit",
-    "test:unit": "npx mocha --recursive -r ts-node/register ./test/unit/**/*.unit.ts",
-    "test:coverage": "npx nyc mocha --recursive -r ts-node/register ./test/unit/**/*.unit.ts",
+    "test:unit": "npx mocha --recursive -r ts-node/register ./test/**/*.unit.ts",
+    "test:coverage": "npx nyc mocha --recursive -r ts-node/register ./test/**/*.unit.ts",
     "sls:package": "sls package",
     "sls:deploy": "sls deploy",
     "sls:undeploy": "sls remove"
