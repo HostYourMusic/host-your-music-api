@@ -1,38 +1,12 @@
 
-import assert from 'assert';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
 import { isValidUUIDV4 } from 'is-valid-uuid-v4';
 
-import { Subscription, User } from '../../../../src/core/domain';
-import { UserRepository, SubscriptionRepository } from '../../../../src/usecases/ports/repository';
+import { User } from '../../../../src/core/domain';
 import { CreateSubscriptionUseCaseInput, CreateSubscriptionUseCase } from '../../../../src/usecases/profile';
-import { Logger } from '../../../../src/usecases/ports/infrastructure';
-
-class MockLogger implements Logger {
-  debug(message: any, data?: any): void { }
-  info(message: any, data?: any): void { }
-  warning(error: Error): void { }
-  error(error: Error): void { }
-  fatal(error: Error): void { }
-}
-
-class MockUserRepository implements UserRepository {
-  findAll(): Promise<User[]> { throw new Error("Method not implemented."); }
-  findByKey(key: string): Promise<User | undefined> { throw new Error("Method not implemented."); }
-  add(entity: User): Promise<void> { throw new Error("Method not implemented."); }
-  exists(key: string): Promise<boolean> { throw new Error("Method not implemented."); }
-  findByEmail(email: string): Promise<User> { throw new Error("Method not implemented."); }
-}
-class MockSubscriptionRepository implements SubscriptionRepository {
-  findAll(): Promise<Subscription[]> { throw new Error("Method not implemented."); }
-  findByKey(key: string): Promise<Subscription | undefined> { throw new Error("Method not implemented."); }
-  add(entity: Subscription): Promise<void> { throw new Error("Method not implemented."); }
-  exists(key: string): Promise<boolean> { throw new Error("Method not implemented."); }
-  findByOwner(email: string): Promise<Subscription | undefined> { throw new Error("Method not implemented."); }
-}
-
+import { MockLogger, MockUserRepository, MockSubscriptionRepository } from './mockRepository'
 
 describe('CreateSubscriptionUseCase', () => {
   describe('Constructor', () => {
