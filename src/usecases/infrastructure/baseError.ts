@@ -1,27 +1,31 @@
-
 enum ErrorSeverity {
-	FATAL = "fatal",
-	ERROR = "error",
-	WARNING = "warning"
+  FATAL = 'fatal',
+  ERROR = 'error',
+  WARNING = 'warning',
 }
 
 interface ErrorObject {
-	code: string;
-	message: string;
-	diagnostics?: string;
-	severity: ErrorSeverity;
-	error: Error;
-  }
+  code: string;
+  message: string;
+  diagnostics?: string;
+  severity: ErrorSeverity;
+  error: Error;
+}
 
 abstract class BaseError extends Error {
   public stack: any;
+
   public reason: string;
+
   public data: any;
+
   public code: string;
+
   public diagnostics?: string;
+
   public severity: ErrorSeverity;
 
-  constructor(errorObj: ErrorObject,  data: any = {}) {
+  constructor(errorObj: ErrorObject, data: any = {}) {
     super(errorObj.message);
 
     this.code = errorObj.code;
@@ -33,6 +37,4 @@ abstract class BaseError extends Error {
   }
 }
 
-export {
-	ErrorSeverity,	ErrorObject, BaseError
-};
+export { ErrorSeverity, ErrorObject, BaseError };

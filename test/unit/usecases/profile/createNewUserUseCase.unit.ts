@@ -6,7 +6,7 @@ import * as chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 chai.use(chaiAsPromised)
 
-import * as idGenerator  from '../../../../src/lib/idGenerator';
+import * as generateId  from '../../../../src/lib/idGenerator';
 import { isValidUUIDV4 } from 'is-valid-uuid-v4';
 
 import UserAlreadyExistsException from '../../../../src/usecases/exceptions/userAlreadyExistsException';
@@ -49,7 +49,8 @@ describe('CreateNewUserUseCase', () =>  {
 	const subscriptionRepository = new MockSubscriptionRepository();
 
 	beforeEach(() => {
-		sandbox.stub(idGenerator, 'generateId').returns(mockId);
+		// sandbox.stub(idGenerator, 'generateId').returns(mockId);
+		sandbox.stub(generateId, 'default').returns(mockId);
 	});
 
 	afterEach(() => {

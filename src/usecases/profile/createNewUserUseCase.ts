@@ -1,72 +1,67 @@
-import { generateId } from '../../lib/idGenerator';
+import generateId from '../../lib/idGenerator';
 
-import { User, Subscription } from "../../core/domain";
-import { UseCase } from "../infrastructure";
+import { User, Subscription } from '../../core/domain';
+import { UseCase } from '../infrastructure';
 import UserAlreadyExistsException from '../exceptions/userAlreadyExistsException';
 
-import { UserRepository, SubscriptionRepository } from "../ports/repository"
+import { UserRepository, SubscriptionRepository } from '../ports/repository';
 import { Logger } from '../ports/infrastructure';
 
 interface CreateNewUserUseCaseInput {
-	name: string,
-	email: string,
-	subscription?: Subscription
+  name: string;
+  email: string;
+  subscription?: Subscription;
 }
 
 class CreateNewUserUseCase extends UseCase {
-	constructor(
-		private userRepository: UserRepository,
-		private subscriptionRepository: SubscriptionRepository,
-		private logger: Logger
-	) {
-		super();
-	};
+  constructor(
+    private userRepository: UserRepository,
+    private subscriptionRepository: SubscriptionRepository,
+    private logger: Logger,
+  ) {
+    super();
+  }
 
-	async execute(input: CreateNewUserUseCaseInput): Promise<User> {
+  async execute(input: CreateNewUserUseCaseInput): Promise<User> {
+    if (await this.userRepository.findByEmail(input.email)) {
+      throw new UserAlreadyExistsException(new Error('User already registered'), 'User already registered');
+    }
 
-		if (await this.userRepository.findByEmail(input.email)) {
-			throw new UserAlreadyExistsException(
-				new Error("User already registered"),
-				"User already registered"
-			);
-		}
+    const user: User = {
+      id: generateId(),
+      name: input.name,
+      email: input.email,
+      owner: false,
+    };
 
-		const user: User = {
-			id: generateId(),
-			name: input.name,
-			email: input.email,
-			owner: false
-		};
+    await this.userRepository
+      .add(user)
+      .then(() => {
+        if (!input.subscription) {
+          user.owner = true;
 
-		await this.userRepository.add(user)
-			.then(() => {
+          const subscription: Subscription = {
+            id: generateId(),
+            users: [user],
+          };
 
-				if (!input.subscription) {
-					user.owner =  true;
+          this.subscriptionRepository.add(subscription);
+          return subscription;
+        }
+        user.owner = false;
+        return this.subscriptionRepository.findByKey(input.subscription.id);
+      })
+      .then((subscription) => {
+        /** To avoid circular reference */
+        if (subscription) subscription.users = [];
+        user.subscription = subscription;
+      })
+      .catch((error) => {
+        this.logger.error(error);
+      });
 
-					const subscription: Subscription = {
-						id: generateId(),
-						users: [user]
-					};
-
-					this.subscriptionRepository.add(subscription);
-					return subscription;
-
-				} else {
-					user.owner =  false;
-					return this.subscriptionRepository.findByKey(input.subscription.id);
-				}
-
-			}).then((subscription) => {
-				/**To avoid circular reference */
-				if(subscription) subscription.users = [];
-				user.subscription = subscription;
-			}).catch(error => {
-
-			});
-
-		return user;
-	}
+    return user;
+  }
 }
 
 export { CreateNewUserUseCaseInput, CreateNewUserUseCase };

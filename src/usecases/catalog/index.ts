@@ -1,9 +1,5 @@
-import CreatePlaylistUseCase from "./createPlaylistUseCase";
-import DeleteAlbumUseCase from "./deleteAlbumUseCase";
-import UploadAlbumUseCase from "./uploadAlbumUseCase";
+import CreatePlaylistUseCase from './createPlaylistUseCase';
+import DeleteAlbumUseCase from './deleteAlbumUseCase';
+import UploadAlbumUseCase from './uploadAlbumUseCase';
 
-export {
-  CreatePlaylistUseCase,
-  DeleteAlbumUseCase,
-  UploadAlbumUseCase
-};
+export { CreatePlaylistUseCase, DeleteAlbumUseCase, UploadAlbumUseCase };

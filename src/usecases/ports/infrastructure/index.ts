@@ -1,7 +1,4 @@
-import Logger from "./logger";
-import CRUDRepository from "./crudRepository";
+import Logger from './logger';
+import CRUDRepository from './crudRepository';
 
-export {
-  Logger,
-	CRUDRepository
-};
+export { Logger, CRUDRepository };

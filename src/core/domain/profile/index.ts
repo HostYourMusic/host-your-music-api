@@ -1,7 +1,4 @@
-import User from "./user";
-import Subscription from "./subscription";
+import User from './user';
+import Subscription from './subscription';
 
-export {
-  User,
-  Subscription
-};
+export { User, Subscription };

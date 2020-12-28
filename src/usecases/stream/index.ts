@@ -1,5 +1,3 @@
-import ListenTrackUseCase from "./listenTrackUseCase";
+import ListenTrackUseCase from './listenTrackUseCase';
 
-export {
-  ListenTrackUseCase
-};
+export default ListenTrackUseCase;
