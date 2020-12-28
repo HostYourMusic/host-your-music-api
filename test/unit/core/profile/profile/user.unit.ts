@@ -7,7 +7,9 @@ describe('User', function () {
   it('Constructor', function () {
     const user: User = {
 			id: 'id',
-			name: 'name'
+			name: 'name',
+			email: 'name@email.com',
+			owner: true
 		};
 
 	expect(user.id).to.equal('id');

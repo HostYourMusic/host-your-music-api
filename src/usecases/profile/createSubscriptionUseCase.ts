@@ -21,7 +21,8 @@ class CreateSubscriptionUseCase extends UseCase {
 
     async execute(input: CreateSubscriptionUseCaseInput): Promise<Subscription> {
 		const subscription: Subscription = {
-			id: uuidv4()
+			id: uuidv4(),
+			users: []
 		};
 
 		return subscription;

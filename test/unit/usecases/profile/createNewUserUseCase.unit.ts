@@ -3,6 +3,7 @@ import assert from 'assert';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
+import * as idGenerator  from '../../../../src/lib/idGenerator';
 import { isValidUUIDV4 } from 'is-valid-uuid-v4';
 
 import { Subscription, User } from '../../../../src/core/domain';
@@ -25,8 +26,19 @@ export class MockSubscriptionRepository implements SubscriptionRepository {
 	exists (key: string): Promise<boolean>  { throw new Error("Method not implemented."); }
 }
 
+const mockId = 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE';
 
 describe('CreateNewUserUseCase', () =>  {
+	const sandbox = sinon.createSandbox();
+
+	before(() => {
+		sandbox.stub(idGenerator, 'generateId').returns(mockId);
+	});
+
+	after(() => {
+		sandbox.restore();
+	});
+
 	describe('Constructor', () => {
 
 		it('Happy Path', () => {
@@ -40,14 +52,20 @@ describe('CreateNewUserUseCase', () =>  {
 
 	describe('Execute', () => {
 
-		it('Happy Path', async () => {
+		it('Create new user, no subscription attached', async () => {
+
+			console.log(`idGenerator() = ${idGenerator.generateId()}`);
+
 			const user: User = {
-				id: 'id',
-				name: 'name'
+				id: idGenerator.generateId(),
+				name: 'User Name',
+				email:'user@mail.com',
+				owner: true
 			};
 
 			const userRepository = new MockUserRepository();
 			sinon.stub(MockUserRepository.prototype, "findByEmail").resolves(null);
+			sinon.stub(MockUserRepository.prototype, "add").resolves();
 
 			const subscriptionRepository = new MockSubscriptionRepository();
 
@@ -59,9 +77,14 @@ describe('CreateNewUserUseCase', () =>  {
 			};
 
 			const newUser = await createNewUserUseCase.execute(input);
+
+			console.log(`newUser = ${JSON.stringify(newUser, null, 2)}`);
+
 			expect(newUser).not.to.be.null;
 			expect(newUser.id).not.to.be.null;
-			expect(isValidUUIDV4(newUser.id)).to.be.true;
+			expect(newUser).to.deep.equal(user);
+
+
 		});
 	});
 

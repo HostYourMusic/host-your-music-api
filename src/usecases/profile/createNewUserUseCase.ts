@@ -1,13 +1,10 @@
-import { v4 as uuidv4 } from 'uuid';
+import { generateId } from '../../lib/idGenerator';
 
-import { User  } from "../../core/domain";
+import { User, Subscription  } from "../../core/domain";
 import { UseCase } from "../infrastructure";
 import UserAlreadyExistsException from '../exceptions/userAlreadyExistsException';
 
-import {
-	UserRepository,
-	SubscriptionRepository
-} from "../ports/repository"
+import { UserRepository, SubscriptionRepository } from "../ports/repository"
 
 interface CreateNewUserUseCaseInput {
 	name: string,
@@ -15,7 +12,8 @@ interface CreateNewUserUseCaseInput {
   }
 
 class CreateNewUserUseCase extends UseCase {
-	constructor(private userRepository: UserRepository,
+	constructor(
+		private userRepository: UserRepository,
 		private subscriptionRepository: SubscriptionRepository
 	) {
 		super();
@@ -30,12 +28,19 @@ class CreateNewUserUseCase extends UseCase {
 			);
 		}
 
-
 		const user: User = {
-			id: uuidv4(),
-			name: input.name
+			id: generateId(),
+			name: input.name,
+			email: input.email,
+			owner: true
 		};
 
+		// const subscription: Subscription = {
+		// 	id: uuidv4(),
+		// 	mai
+		// };
+
+		await this.userRepository.add(user);
 
 		return user;
     }

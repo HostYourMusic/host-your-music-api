@@ -42,7 +42,9 @@ describe('CreateSubscriptionUseCase', () =>  {
 		it('Happy Path', async () => {
 			const user: User = {
 				id: 'id',
-				name: 'name'
+				name: 'name',
+				email:'name@email.com',
+				owner: true
 			};
 
 			const userRepository = new MockUserRepository();
