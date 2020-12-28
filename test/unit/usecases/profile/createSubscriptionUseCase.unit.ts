@@ -12,14 +12,14 @@ import { CreateSubscriptionUseCaseInput, CreateSubscriptionUseCase } from '../..
 
 export class MockUserRepository implements UserRepository {
 	findAll (): Promise<User[]> { throw new Error("Method not implemented."); }
-	findByKey (key: string): Promise<User>  { throw new Error("Method not implemented."); }
+	findByKey (key: string): Promise<User | null>  { throw new Error("Method not implemented."); }
 	add (entity: User): Promise<void>  { throw new Error("Method not implemented."); }
 	exists (key: string): Promise<boolean>  { throw new Error("Method not implemented."); }
 	findByEmail(email: string): Promise<User>  { throw new Error("Method not implemented."); }
 }
 export class MockSubscriptionRepository implements SubscriptionRepository {
 	findAll (): Promise<Subscription[]> { throw new Error("Method not implemented."); }
-	findByKey (key: string): Promise<Subscription>  { throw new Error("Method not implemented."); }
+	findByKey (key: string): Promise<Subscription | null>  { throw new Error("Method not implemented."); }
 	add (entity: Subscription): Promise<void>  { throw new Error("Method not implemented."); }
 	exists (key: string): Promise<boolean>  { throw new Error("Method not implemented."); }
 }

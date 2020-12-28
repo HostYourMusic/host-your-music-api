@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { User  } from "../../core/domain";
 import { UseCase } from "../infrastructure";
+import UserAlreadyExistsException from '../exceptions/userAlreadyExistsException';
 
 import {
 	UserRepository,
@@ -23,7 +24,10 @@ class CreateNewUserUseCase extends UseCase {
     async execute(input: CreateNewUserUseCaseInput): Promise<User> {
 
 		if(await this.userRepository.findByEmail(input.email)) {
-			throw new UserAlreadyExistException();
+			throw new UserAlreadyExistsException(
+				new Error("User already registered"),
+				"User already registered"
+			);
 		}
 
 
@@ -31,7 +35,6 @@ class CreateNewUserUseCase extends UseCase {
 			id: uuidv4(),
 			name: input.name
 		};
-
 
 
 		return user;
