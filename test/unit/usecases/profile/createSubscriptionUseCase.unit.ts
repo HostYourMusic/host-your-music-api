@@ -30,6 +30,7 @@ class MockSubscriptionRepository implements SubscriptionRepository {
 	findByKey (key: string): Promise<Subscription | undefined>  { throw new Error("Method not implemented."); }
 	add (entity: Subscription): Promise<void>  { throw new Error("Method not implemented."); }
 	exists (key: string): Promise<boolean>  { throw new Error("Method not implemented."); }
+	findByOwner (email: string): Promise<Subscription | undefined> { throw new Error("Method not implemented."); }
 }
 
 
@@ -52,7 +53,8 @@ describe('CreateSubscriptionUseCase', () =>  {
 				id: 'id',
 				name: 'name',
 				email:'name@email.com',
-				owner: true
+				owner: true,
+				subscriptionId: ''
 			};
 
 			const userRepository = new MockUserRepository();

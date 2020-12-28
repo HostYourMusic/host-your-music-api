@@ -32,8 +32,11 @@ class CreateNewUserUseCase extends UseCase {
       name: input.name,
       email: input.email,
       owner: false,
+			subscriptionId: ''
     };
 
+
+		/**TODO: FIX IT */
     await this.userRepository
       .add(user)
       .then(() => {
@@ -52,9 +55,7 @@ class CreateNewUserUseCase extends UseCase {
         return this.subscriptionRepository.findByKey(input.subscription.id);
       })
       .then((subscription) => {
-        /** To avoid circular reference */
-        if (subscription) subscription.users = [];
-        user.subscription = subscription;
+        if (subscription) user.subscriptionId = subscription.id;
       })
       .catch((error) => {
         this.logger.error(error);

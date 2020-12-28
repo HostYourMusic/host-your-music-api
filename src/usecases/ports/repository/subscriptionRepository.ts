@@ -5,4 +5,5 @@ import { Subscription } from '../../../core/domain';
 // }
 
 export default interface SubscriptionRepository extends CRUDRepository<Subscription, string> {
+  findByOwner: (email: string) => Promise<Subscription | undefined>;
 }

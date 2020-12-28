@@ -9,7 +9,8 @@ describe('User', function () {
 			id: 'id',
 			name: 'name',
 			email: 'name@email.com',
-			owner: true
+			owner: true,
+			subscriptionId: ''
 		};
 
 	expect(user.id).to.equal('id');

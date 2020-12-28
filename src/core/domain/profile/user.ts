@@ -5,5 +5,5 @@ export default interface User {
   name: string;
   email: string;
   owner: boolean;
-  subscription?: Subscription;
+  subscriptionId: string;
 }

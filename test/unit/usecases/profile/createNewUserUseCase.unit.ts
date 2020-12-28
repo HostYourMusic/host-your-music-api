@@ -38,6 +38,7 @@ class MockSubscriptionRepository implements SubscriptionRepository {
 	findByKey (key: string): Promise<Subscription | undefined>  { throw new Error("Method not implemented."); }
 	add (entity: Subscription): Promise<void>  { throw new Error("Method not implemented."); }
 	exists (key: string): Promise<boolean>  { throw new Error("Method not implemented."); }
+	findByOwner (email: string): Promise<Subscription | undefined> { throw new Error("Method not implemented."); }
 }
 
 const mockId = 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE';
@@ -77,10 +78,7 @@ describe('CreateNewUserUseCase', () =>  {
 				name: 'User Name',
 				email:'user@mail.com',
 				owner: true,
-				subscription: {
-					id: mockId,
-					users: []
-				}
+				subscriptionId: mockId
 			};
 
 			sandbox.stub(MockUserRepository.prototype, "findByEmail").resolves(undefined);
@@ -107,10 +105,7 @@ describe('CreateNewUserUseCase', () =>  {
 				name: 'User Name',
 				email:'user@mail.com',
 				owner: false,
-				subscription: {
-					id: mockId,
-					users: []
-				}
+				subscriptionId: mockId
 			};
 
 			const existingSubscription: Subscription = {
@@ -144,10 +139,7 @@ describe('CreateNewUserUseCase', () =>  {
 				name: 'User Name',
 				email:'user@mail.com',
 				owner: false,
-				subscription: {
-					id: mockId,
-					users: []
-				}
+				subscriptionId: mockId
 			};
 
 			const existingSubscription: Subscription = {
