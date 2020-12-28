@@ -5,6 +5,7 @@ local
 
 # Lint reports
 coverage
+.nyc_output
 
 # Serverless directories
 .serverless
