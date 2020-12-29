@@ -36,10 +36,10 @@ class AssignUserToSubscriptionUseCase extends UseCase {
       throw new SubscriptionNotFoundException(error, 'Subscription does not exist');
     }
 
-		const isUserAlreadyAssigned: boolean =
+		const isUserAssigned: boolean =
 			subscription.userIds.filter(userId => userId === input.userId).length > 0;
 
-		if(isUserAlreadyAssigned) return;
+		if(isUserAssigned) return;
 
 		subscription.userIds.push(input.userId);
 
