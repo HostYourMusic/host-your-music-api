@@ -6,7 +6,7 @@ import * as chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 chai.use(chaiAsPromised)
 
-import * as generateId  from '../../../../src/lib/idGenerator';
+import * as generateId from '../../../../src/lib/idGenerator';
 import UserAlreadyExistsException from '../../../../src/usecases/exceptions/userAlreadyExistsException';
 
 import { Subscription, User } from '../../../../src/core/domain';
@@ -15,116 +15,116 @@ import { MockLogger, MockUserRepository, MockSubscriptionRepository } from './mo
 
 const mockId = 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE';
 
-describe('CreateNewUserUseCase', () =>  {
-	const sandbox = sinon.createSandbox();
+describe('CreateNewUserUseCase', () => {
+  const sandbox = sinon.createSandbox();
 
-	const userRepository = new MockUserRepository();
-	const subscriptionRepository = new MockSubscriptionRepository();
+  const userRepository = new MockUserRepository();
+  const subscriptionRepository = new MockSubscriptionRepository();
 
-	beforeEach(() => {
-		sandbox.stub(generateId, 'default').returns(mockId);
-	});
+  beforeEach(() => {
+    sandbox.stub(generateId, 'default').returns(mockId);
+  });
 
-	afterEach(() => {
-		sandbox.restore();
-	});
+  afterEach(() => {
+    sandbox.restore();
+  });
 
-	describe('Constructor', () => {
+  describe('Constructor', () => {
 
-		it('Happy Path', () => {
-			const userRepository = new MockUserRepository();
-			const subscriptionRepository = new MockSubscriptionRepository();
-			
-			const createNewUserUseCase = new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
-			chai.expect(createNewUserUseCase).to.be.instanceof(CreateNewUserUseCase);
-		});
-	});
+    it('Happy Path', () => {
+      const userRepository = new MockUserRepository();
+      const subscriptionRepository = new MockSubscriptionRepository();
 
-	describe('Execute', () => {
+      const createNewUserUseCase = new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
+      chai.expect(createNewUserUseCase).to.be.instanceof(CreateNewUserUseCase);
+    });
+  });
 
-		it('Create new user, no subscription attached', async () => {
+  describe('Execute', () => {
 
-			const expectedUser: User = {
-				id: mockId,
-				name: 'User Name',
-				email:'user@mail.com',
-				owner: true,
-				subscriptionId: mockId
-			};
+    it('Create new user, no subscription attached', async () => {
 
-			sandbox.stub(MockUserRepository.prototype, "findByEmail").resolves(undefined);
-			sandbox.stub(MockUserRepository.prototype, "add").resolves();
-			sandbox.stub(MockSubscriptionRepository.prototype, "add").resolves();
+      const expectedUser: User = {
+        id: mockId,
+        name: 'User Name',
+        email: 'user@mail.com',
+        owner: true,
+        subscriptionId: mockId
+      };
 
-			const createNewUserUseCase =
-				new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
-			const input: CreateNewUserUseCaseInput = {
-				name: 'User Name',
-				email: 'user@mail.com'
-			};
+      sandbox.stub(MockUserRepository.prototype, "findByEmail").resolves(undefined);
+      sandbox.stub(MockUserRepository.prototype, "add").resolves();
+      sandbox.stub(MockSubscriptionRepository.prototype, "add").resolves();
 
-			const resultUser = await createNewUserUseCase.execute(input);
+      const createNewUserUseCase =
+        new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
+      const input: CreateNewUserUseCaseInput = {
+        name: 'User Name',
+        email: 'user@mail.com'
+      };
 
-			chai.expect(resultUser).not.to.be.null;
-			chai.expect(resultUser).to.deep.equal(expectedUser);
-		});
+      const resultUser = await createNewUserUseCase.execute(input);
 
-		it('Create new user, existing subscription attached', async () => {
+      chai.expect(resultUser).not.to.be.null;
+      chai.expect(resultUser).to.deep.equal(expectedUser);
+    });
 
-			const expectedUser: User = {
-				id: mockId,
-				name: 'User Name',
-				email:'user@mail.com',
-				owner: false,
-				subscriptionId: mockId
-			};
+    it('Create new user, existing subscription attached', async () => {
 
-			const existingSubscription: Subscription = {
-				id: mockId,
-				userIds: []
-			};
+      const expectedUser: User = {
+        id: mockId,
+        name: 'User Name',
+        email: 'user@mail.com',
+        owner: false,
+        subscriptionId: mockId
+      };
 
-			sandbox.stub(MockUserRepository.prototype, "findByEmail").resolves(undefined);
-			sandbox.stub(MockUserRepository.prototype, "add").resolves();
-			sandbox.stub(MockSubscriptionRepository.prototype, "add").resolves();
-			sandbox.stub(MockSubscriptionRepository.prototype, "findByKey").resolves(existingSubscription);
+      const existingSubscription: Subscription = {
+        id: mockId,
+        userIds: []
+      };
 
-			const createNewUserUseCase =
-				new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
-			const input: CreateNewUserUseCaseInput = {
-				name: 'User Name',
-				email: 'user@mail.com',
-				subscription: existingSubscription
-			};
+      sandbox.stub(MockUserRepository.prototype, "findByEmail").resolves(undefined);
+      sandbox.stub(MockUserRepository.prototype, "add").resolves();
+      sandbox.stub(MockSubscriptionRepository.prototype, "add").resolves();
+      sandbox.stub(MockSubscriptionRepository.prototype, "findByKey").resolves(existingSubscription);
 
-			const resultUser = await createNewUserUseCase.execute(input);
+      const createNewUserUseCase =
+        new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
+      const input: CreateNewUserUseCaseInput = {
+        name: 'User Name',
+        email: 'user@mail.com',
+        subscription: existingSubscription
+      };
 
-			chai.expect(resultUser).not.to.be.null;
-			chai.expect(resultUser).to.deep.equal(expectedUser);
-		});
+      const resultUser = await createNewUserUseCase.execute(input);
 
-		it('Create new user, already existing', async () => {
+      chai.expect(resultUser).not.to.be.null;
+      chai.expect(resultUser).to.deep.equal(expectedUser);
+    });
 
-			const existingUser: User = {
-				id: mockId,
-				name: 'User Name',
-				email:'user@mail.com',
-				owner: false,
-				subscriptionId: mockId
-			};
+    it('Create new user which already exists', async () => {
 
-			sandbox.stub(MockUserRepository.prototype, "findByEmail").resolves(existingUser);
+      const existingUser: User = {
+        id: mockId,
+        name: 'User Name',
+        email: 'user@mail.com',
+        owner: false,
+        subscriptionId: mockId
+      };
 
-			const createNewUserUseCase =
-				new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
+      sandbox.stub(MockUserRepository.prototype, "findByEmail").resolves(existingUser);
 
-				const input: CreateNewUserUseCaseInput = {
-				name: 'User Name',
-				email: 'user@mail.com'
-			};
+      const createNewUserUseCase =
+        new CreateNewUserUseCase(userRepository, subscriptionRepository, new MockLogger());
 
-			await chai.expect(createNewUserUseCase.execute(input))
-				.to.be.rejectedWith(UserAlreadyExistsException);
-		});
-	});
+      const input: CreateNewUserUseCaseInput = {
+        name: 'User Name',
+        email: 'user@mail.com'
+      };
+
+      await chai.expect(createNewUserUseCase.execute(input))
+        .to.be.rejectedWith(UserAlreadyExistsException);
+    });
+  });
 });
